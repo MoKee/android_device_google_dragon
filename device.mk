@@ -277,7 +277,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 $(call inherit-product, build/target/product/vboot.mk)
 
-# only include verity on user builds for LineageOS
+# only include verity on user builds for MoKee
 ifeq ($(TARGET_BUILD_VARIANT),user)
 $(call inherit-product, build/target/product/verity.mk)
 # including verity.mk automatically enabled boot signer which conflicts with

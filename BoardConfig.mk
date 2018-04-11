@@ -37,7 +37,7 @@ BOARD_KERNEL_PAGESIZE := 2048
 #BOARD_KERNEL_CMDLINE +=
 #BOARD_MKBOOTIMG_ARGS :=
 TARGET_KERNEL_SOURCE := kernel/google/dragon
-TARGET_KERNEL_CONFIG := lineageos_dragon_defconfig
+TARGET_KERNEL_CONFIG := mokee_dragon_defconfig
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_TOOLCHAIN_ROOT := prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin
 TARGET_KERNEL_TOOLS_PREFIX := $(TARGET_KERNEL_TOOLCHAIN_ROOT)/bin/aarch64-linux-android-
@@ -130,7 +130,7 @@ endif
 
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.dragon
 
-WITH_LINEAGE_CHARGER := false
+WITH_MOKEE_CHARGER := false
 
 # Testing related defines
 BOARD_PERFSETUP_SCRIPT := platform_testing/scripts/perf-setup/dragon-setup.sh
