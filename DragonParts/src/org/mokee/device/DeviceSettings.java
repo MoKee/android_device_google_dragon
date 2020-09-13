@@ -64,7 +64,7 @@ public class DeviceSettings extends PreferenceFragment implements Preference.OnP
         SystemProperties.set(WIFI_CCODE_SYSTEM_PROPERTY, ccode);
 
         try {
-            mWifiManager.setCountryCode(ccode);
+            //mWifiManager.setCountryCode(ccode);
 
             if (mWifiManager.isWifiEnabled()) {
                 /* Country code takes effect after WiFi restart */

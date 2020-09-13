@@ -182,14 +182,18 @@ PRODUCT_PACKAGES += \
 
 # Health HAL
 PRODUCT_PACKAGES += \
-    android.hardware.health@1.0-impl \
-    android.hardware.health@1.0-service
+    android.hardware.health@2.0-impl \
+    android.hardware.health@2.0-service
 
 # Light HAL
 PRODUCT_PACKAGES += \
     lights.dragon \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service
+
+# MESA 3D
+PRODUCT_SOONG_NAMESPACES += \
+    external/mesa3d
 
 # Sensors
 PRODUCT_PACKAGES += \
@@ -314,7 +318,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 # TODO(dgreid) - Add back verity dependencies like flounder has.
 
-$(call inherit-product, build/target/product/vboot.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/vboot.mk)
 
 # The following group is necessary to support building the NVIDIA vendor
 # HALs and prebuilts.
