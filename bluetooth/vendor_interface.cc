@@ -160,12 +160,12 @@ class FirmwareStartupTimer {
 bool VendorInterface::Initialize(
     InitializeCompleteCallback initialize_complete_cb,
     PacketReadCallback event_cb, PacketReadCallback acl_cb,
-    PacketReadCallback sco_cb) {
+    PacketReadCallback sco_cb, PacketReadCallback iso_cb) {
   LOG_ALWAYS_FATAL_IF(g_vendor_interface, "%s: No previous Shutdown()?",
                       __func__);
   g_vendor_interface = new VendorInterface();
   return g_vendor_interface->Open(initialize_complete_cb, event_cb, acl_cb,
-                                  sco_cb);
+                                  sco_cb, iso_cb);
 }
 
 void VendorInterface::Shutdown() {
@@ -181,7 +181,8 @@ VendorInterface* VendorInterface::get() { return g_vendor_interface; }
 bool VendorInterface::Open(InitializeCompleteCallback initialize_complete_cb,
                            PacketReadCallback event_cb,
                            PacketReadCallback acl_cb,
-                           PacketReadCallback sco_cb) {
+                           PacketReadCallback sco_cb,
+                           PacketReadCallback iso_cb) {
   initialize_complete_cb_ = initialize_complete_cb;
 
   // Initialize vendor interface
@@ -239,7 +240,7 @@ bool VendorInterface::Open(InitializeCompleteCallback initialize_complete_cb,
 
   if (fd_count == 1) {
     hci::H4Protocol* h4_hci =
-        new hci::H4Protocol(fd_list[0], intercept_events, acl_cb, sco_cb);
+        new hci::H4Protocol(fd_list[0], intercept_events, acl_cb, sco_cb, iso_cb);
     fd_watcher_.WatchFdForNonBlockingReads(
         fd_list[0], [h4_hci](int fd) { h4_hci->OnDataReady(fd); });
     hci_ = h4_hci;
