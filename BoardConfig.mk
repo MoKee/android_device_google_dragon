@@ -99,7 +99,9 @@ BOARD_CUSTOM_BT_CONFIG := device/google/dragon/bluetooth/vnd_dragon.txt
 
 # Shims
 TARGET_LD_SHIM_LIBS += \
-    /system/vendor/lib/hw/camera.dragon.so|libshim_camera.so
+    /system/vendor/lib/hw/camera.dragon.so|libshim_camera.so \
+    /system/vendor/lib/hw/gatekeeper.dragon.so|libshim_gatekeeper.so \
+    /system/vendor/lib64/hw/gatekeeper.dragon.so|libshim_gatekeeper.so
 
 # Wifi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
