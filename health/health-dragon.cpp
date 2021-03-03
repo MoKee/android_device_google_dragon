@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "healthd-dragon"
-#include <healthd/healthd.h>
+#define LOG_TAG "health-dragon"
+#include <health/utils.h>
+#include <health2impl/Health.h>
+
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -27,8 +29,6 @@
 #define BATTERY_CRITICAL_LOW_CAP 10
 #define BATTERY_CRITICAL_LOW_IMAX_MA 5000
 #define BATTERY_MAX_IMAX_MA          9000
-
-using namespace android;
 
 static int read_sysfs(const char *path, char *buf, size_t size) {
     char *cp = NULL;
@@ -61,10 +61,17 @@ static int read_current_max_ma() {
     return 0;
 }
 
-static void dragon_soc_adjust(struct BatteryProperties *props)
+namespace android {
+namespace hardware {
+namespace health {
+namespace V2_1 {
+namespace implementation {
+
+static void dragon_soc_adjust(HealthInfo* health_info)
 {
     int soc;
     int current_max_ma;
+    V1_0::HealthInfo *props = &health_info->legacy.legacy;
 
     soc = props->batteryLevel;
     /*
@@ -72,9 +79,9 @@ static void dragon_soc_adjust(struct BatteryProperties *props)
      * BATTERY_CRITICAL_LOW_CAP shrink soc based on imax value
      */
     if ((soc < BATTERY_CRITICAL_LOW_CAP) &&
-        ((props->batteryStatus == BATTERY_STATUS_DISCHARGING) ||
-         (props->batteryStatus == BATTERY_STATUS_NOT_CHARGING) ||
-         (props->batteryStatus == BATTERY_STATUS_UNKNOWN))) {
+        ((props->batteryStatus == V1_0::BatteryStatus::DISCHARGING) ||
+         (props->batteryStatus == V1_0::BatteryStatus::NOT_CHARGING) ||
+         (props->batteryStatus == V1_0::BatteryStatus::UNKNOWN))) {
 
         current_max_ma = read_current_max_ma();
         if (current_max_ma == 0)
@@ -95,13 +102,15 @@ static void dragon_soc_adjust(struct BatteryProperties *props)
     props->batteryLevel = soc;
 }
 
-int healthd_board_battery_update(struct BatteryProperties *props)
+int dragon_update_health_info(HealthInfo* health_info)
 {
+    dragon_soc_adjust(health_info);
 
-    dragon_soc_adjust(props);
-
-    // return 0 to log periodic polled battery status to kernel log
     return 0;
 }
 
-void healthd_board_init(struct healthd_config *config) {}
+}  // namespace implementation
+}  // namespace V2_1
+}  // namespace health
+}  // namespace hardware
+}  // namespace android

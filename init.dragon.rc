@@ -215,9 +215,16 @@ service tune_therm_gov /vendor/bin/tune-thermal-gov.sh skin-therm pd_thermal_gov
     class main
     oneshot
 
-service battery_charger /charger
+service battery_charger /system/bin/charger
     class charger
     seclabel u:r:healthd:s0
+    user system
+    group system wakelock input
+    capabilities SYS_BOOT
+    file /dev/kmsg w
+    file /sys/fs/pstore/console-ramoops-0 r
+    file /sys/fs/pstore/console-ramoops r
+    file /proc/last_kmsg r
 
 # on userdebug and eng builds, enable kgdb on the serial console
 on property:ro.debuggable=1

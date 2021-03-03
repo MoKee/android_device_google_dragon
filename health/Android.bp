@@ -1,15 +1,35 @@
-//
-// Static library for board custom healthd extension
-//
+cc_library_shared {
+    name: "android.hardware.health@2.1-impl-dragon",
+    stem: "android.hardware.health@2.0-impl-2.1-dragon",
 
-cc_library_static {
-    name: "libhealthd.dragon",
+    // Install to vendor and recovery.
+    proprietary: true,
+    recovery_available: true,
 
-    srcs: ["healthd-dragon.cpp"],
+    relative_install_path: "hw",
 
-    static_libs: ["libcutils"],
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+        "android.hardware.health@2.1",
+        "android.hardware.health@2.0",
+    ],
 
-    header_libs: ["libhealthd_headers"],
+    static_libs: [
+        "android.hardware.health@1.0-convert",
+        "libbatterymonitor",
+        "libhealthloop",
+        "libhealth2impl",
+    ],
 
-    vendor_available: true
+    srcs: [
+        "HealthImpl.cpp",
+        "health-dragon.cpp",
+    ],
+
+    // No vintf_fragments because both -impl and -service should have been
+    // installed.
 }
