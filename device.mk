@@ -191,6 +191,10 @@ PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service
 
+# Media Codec 2.0
+PRODUCT_PACKAGES += \
+    android.hardware.media.c2@1.1-service.dragon
+
 # MESA 3D
 PRODUCT_SOONG_NAMESPACES += \
     external/mesa3d

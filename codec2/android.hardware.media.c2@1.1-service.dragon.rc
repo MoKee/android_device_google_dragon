@@ -1,0 +1,6 @@
+service android-hardware-media-c2-hal-1-1-dragon /vendor/bin/hw/android.hardware.media.c2@1.1-service.dragon
+    class hal
+    user mediacodec
+    group camera mediadrm drmrpc
+    ioprio rt 4
+    writepid /dev/cpuset/foreground/tasks

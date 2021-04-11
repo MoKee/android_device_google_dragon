@@ -15,5 +15,6 @@
 
 subdirs = [
     "bluetooth",
+    "codec2",
     "power"
 ]
