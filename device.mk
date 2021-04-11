@@ -216,10 +216,6 @@ PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-service \
     libshim_gatekeeper
 
-# Configstore
-PRODUCT_PACKAGES += \
-    android.hardware.configstore@1.0-service
-
 # Dumpstate HAL
 PRODUCT_PACKAGES += \
     android.hardware.dumpstate@1.0-service.dragon
@@ -250,6 +246,13 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.hwui.text_large_cache_width=2048 \
     ro.hwui.text_large_cache_height=1024 \
     ro.hwui.disable_scissor_opt=true
+
+# ConfigStore HAL has been deprecated in presence of these props
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    ro.surface_flinger.max_frame_buffer_acquired_buffers=3 \
+    ro.surface_flinger.present_time_offset_from_vsync_ns=0 \
+    ro.surface_flinger.vsync_event_phase_offset_ns=7500000 \
+    ro.surface_flinger.vsync_sf_event_phase_offset_ns=5000000
 
 # The default locale should be determined from VPD, not from build.prop.
 PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \
