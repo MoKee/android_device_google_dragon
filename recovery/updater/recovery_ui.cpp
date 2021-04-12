@@ -19,7 +19,6 @@
 #include <recovery_ui/device.h>
 #include <recovery_ui/screen_ui.h>
 #include <recovery_ui/ui.h>
-#include "common.h"
 #include "flash_device.h"
 #include "vboot_interface.h"
 
@@ -28,7 +27,7 @@ class DragonDevice : public Device {
     DragonDevice(RecoveryUI* ui) : Device(ui) { }
 
     virtual bool PostWipeData() {
-        int fastboot_cap = -1;
+        uint8_t fastboot_cap = -1;
         struct flash_device *spi = flash_open("spi", NULL);
 
         if (spi == NULL) {
